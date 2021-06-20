@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 function Admin() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-
+  const [pageName, setPageName] = React.useState('');
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
@@ -37,8 +37,16 @@ function Admin() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Topbar open={open} handleDrawerToggle={handleDrawerToggle} />
-      <SideDrawer open={open} handleDrawerToggle={handleDrawerToggle} />
+      <Topbar
+        pageName={pageName}
+        open={open}
+        handleDrawerToggle={handleDrawerToggle}
+      />
+      <SideDrawer
+        callback={setPageName}
+        open={open}
+        handleDrawerToggle={handleDrawerToggle}
+      />
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,

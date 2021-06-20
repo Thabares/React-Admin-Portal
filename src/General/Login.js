@@ -1,17 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Controls from '../components/controls/Controls';
 import { useForm, Form } from '../components/useForm';
-import {
-  Link,
-  Grid,
-  Typography,
-  makeStyles,
-  Card,
-  CardContent,
-} from '@material-ui/core';
+import { Grid, Typography, makeStyles } from '@material-ui/core';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { useHistory } from 'react-router-dom';
-
+import * as UserDetails from '../services/UserDetails';
+import Notification from '../components/Notification';
+import { useEffect } from 'react';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -39,6 +34,12 @@ export default function SignIn() {
   const classes = useStyles();
   const history = useHistory();
 
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: '',
+    type: '',
+  });
+
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
     if ('email' in fieldValues)
@@ -48,8 +49,15 @@ export default function SignIn() {
     if ('password' in fieldValues)
       temp.password = fieldValues.password ? '' : 'This field is required';
     setErrors({ ...temp });
-    if (fieldValues == values) return Object.values(temp).every((x) => x == '');
+    if (fieldValues === values)
+      return Object.values(temp).every((x) => x === '');
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('userDetails') !== null) {
+      history.push('/admin');
+    }
+  }, []);
 
   const { values, errors, setErrors, handleInputChange } = useForm(
     initialFValues,
@@ -59,7 +67,17 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (validate()) history.push('/admin');
+    if (validate()) {
+      if (UserDetails.verify(values) === 109) {
+        history.push('/admin');
+      } else {
+        setNotify({
+          isOpen: true,
+          message: 'User Not Found',
+          type: 'error',
+        });
+      }
+    }
   };
 
   return (
@@ -103,6 +121,7 @@ export default function SignIn() {
           </Grid>
         </Grid>
       </Form>
+      <Notification notify={notify} setNotify={setNotify} />
     </div>
   );
 }
