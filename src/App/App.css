@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Molengo&family=Unica+One&display=swap');
+
+html * {
+  font-family: 'Unica One', cursive !important;
+}
+
+.MuiInputBase-root * {
+  font-family: 'Molengo', sans-serif !important;
+}
