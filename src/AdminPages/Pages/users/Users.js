@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   pageContent: {
     margin: theme.spacing(2),
     padding: theme.spacing(1),
+    overflowX: 'auto',
   },
   searchInput: {
     width: '75%',

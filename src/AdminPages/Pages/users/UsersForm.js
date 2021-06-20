@@ -49,8 +49,6 @@ export default function Users(props) {
     event.preventDefault();
     if (validate()) {
       addOrEdit(values, resetForm);
-      // employeeService.insertEmployees(values);
-      // resetForm();
     }
   };
 
@@ -63,7 +61,7 @@ export default function Users(props) {
   return (
     <Form onSubmit={handleSubmit}>
       <Grid container>
-        <Grid item xs={6}>
+        <Grid item xl={6} lg={6} md={6} xs={12} sm={12}>
           <Controls.Input
             name="fullName"
             label="Full Name"
@@ -92,7 +90,7 @@ export default function Users(props) {
             onChange={handleInputChange}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xl={6} lg={6} md={6} xs={12} sm={12}>
           <Controls.RadioGroup
             value={values.gender}
             label="Gender"

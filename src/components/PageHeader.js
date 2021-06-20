@@ -4,6 +4,7 @@ import {
   Typography,
   makeStyles,
   Toolbar,
+  Hidden,
 } from '@material-ui/core';
 import React from 'react';
 import Controls from './controls/Controls';
@@ -55,6 +56,37 @@ export default function PageHeader(props) {
             {subTitle}
           </Typography>
         </div>
+        <Hidden only={['sm', 'xs']}>
+          <Toolbar>
+            <Controls.Input
+              className={classes.searchInput}
+              label="Search Employees"
+              size="small"
+              onChange={handleSearch}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            <Controls.Button
+              className={classes.newButton}
+              text="Add New"
+              onClick={() => {
+                setRecordForEdit(null);
+                setOpenPopup(true);
+              }}
+              variant="outlined"
+              startIcon={<AddIcon />}
+            />
+          </Toolbar>
+        </Hidden>
+      </div>
+
+      <Hidden only={['lg', 'xl', 'md']}>
         <Toolbar>
           <Controls.Input
             className={classes.searchInput}
@@ -81,7 +113,7 @@ export default function PageHeader(props) {
             startIcon={<AddIcon />}
           />
         </Toolbar>
-      </div>
+      </Hidden>
     </Paper>
   );
 }
