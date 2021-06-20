@@ -10,6 +10,7 @@ import {
   CardContent,
 } from '@material-ui/core';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +37,7 @@ const initialFValues = {
 
 export default function SignIn() {
   const classes = useStyles();
+  const history = useHistory();
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
@@ -57,7 +59,7 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    validate();
+    if (validate()) history.push('/admin');
   };
 
   return (
